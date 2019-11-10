@@ -94,9 +94,10 @@ app.delete("/user-movies/:userMovieId", async function(req, res, next) {
   }
 });
 
-app.get('/auth/google-oauth', passport.authenticate('google-oauth', {
-  scope: ['email', 'profile', 'openid'] 
-}))
+app.get(
+  '/auth/google-oauth',
+  passport.authenticate('google-oauth', { scope: ['email', 'profile', 'openid'] })
+)
 
 app.get(
   '/auth/google-oauth/callback',
@@ -105,7 +106,7 @@ app.get(
     if(!req.user){
       next(Boom.unauthorized())
     }
-    const { token, ...user } = req
+    const { token, ...user } = req.user
     res.cookie('token', token, {
       httpOnly: !config.dev,
       secure: !config.dev
